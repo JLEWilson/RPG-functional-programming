@@ -3,16 +3,18 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import './css/styles.css';
 import $ from 'jquery';
 import * as entities from './js/entities.js';
+import * as states from './js/states.js';
 
-let player = {};
+let player;
 const enemy = entities.goblin;
 let gameOver = false;
 
 //this is document ready
 $(() => { 
-  $("#role-selection").html(populateCharacterSelect(entities.roleSelection));
+  $("#role-selection").append(populateCharacterSelect(entities.roleSelection));
   $(".role-button").on("click", function() {
     player = entities.roleSelection[$(this).prop("id")];
+    player(states.setPropToValue("name")($("#player-name").val()));
     $("#role-selection").hide();
     $("#button-area").show();
     doButtonStuffUponRoleSelect();
