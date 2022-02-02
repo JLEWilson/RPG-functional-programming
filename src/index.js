@@ -4,23 +4,28 @@ import './css/styles.css';
 import $ from 'jquery';
 import * as entities from './js/entities.js';
 
-//when they pick a class
-//const player = entity.(const for class they pick)
-
-//when we need to make a new enemy
-//const enemy = entity.goblin (or whatever)
-
 const player = entities.wizard;
 const enemy = entities.goblin;
 
-//jquery ish
-$(() => { //this is document ready
+//this is document ready
+$(() => { 
   $("#button-area").html(actionButtonBuilder(player().actions)); 
   $("button").on("click", function() {
+    
+    //player action
     const target = enemy; //need to update to get dynamically from checkbox or similar
-    const message = player().actions[$(this).prop("id")](target);
-    $("#text-display-area").prepend(message);
+    const playerActionMessage = player().actions[$(this).prop("id")](target);
+    $("#text-display-area").prepend(playerActionMessage);
     $("#text-display-area").prepend(`<p>${target().name} HP is ${target().HP}`);
+
+    //enemy action
+    // TODO: target for enemy action (since they may target self to heal etc.)
+    // pick a random action from enemy's list
+    const enemyActions = Object.keys(enemy().actions);
+    const chosenAction = enemyActions[Math.floor(Math.random() * enemyActions.length)]; 
+    const enemyActionMessage = enemy().actions[chosenAction](player);
+    $("#text-display-area").prepend(enemyActionMessage);
+    $("#text-display-area").prepend(`<p>${player().name} HP is ${player().HP}`);
   });
 });
 
