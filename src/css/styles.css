@@ -1,9 +1,13 @@
-body{
+body {
   background-color: blue;
 }
 
-#text-display-area{
+#text-display-area {
   background-color: white;
   overflow-y: auto;
   height: 50em;
+}
+
+#button-area {
+  display: none;
 }
