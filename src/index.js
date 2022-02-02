@@ -4,24 +4,31 @@ import './css/styles.css';
 import $ from 'jquery';
 import * as entity from './js/entity.js';
 
-const wizard = entity.state({"name": "", "HP": 3, "ATT": 5, "DEF": 1, "actions": {}});
+
+const wizard = entity.state({"name": "player", "HP": 3, "ATT": 5, "DEF": 1, "actions": {}});
 
 const addMagicMissile = entity.addAction("magicMissile", (enemy) => {
-  $("#text-display-area").append("<p>I attack the darkness!</p>");
+  enemy(entity.modifyPropByValue("HP")(-2));
+  $("#text-display-area").prepend("<p>I attack the darkness!</p>");
 });
+
 const addFireball = entity.addAction("fireball", (enemy) => {
-  $("#text-display-area").append("<p>Boom, fireball!</p>");
+  enemy(entity.modifyPropByValue("HP")(-5));
+  $("#text-display-area").prepend("<p>Boom, fireball!</p>");
 });
   
 wizard(addMagicMissile);
 wizard(addFireball);
 
+const goblin = entity.state({"name": "goblin", "HP": 10, "ATT": 1, "DEF": 1, "actions": {}});
 
 //jquery ish
 $(() => { //this is document ready
-  $("#button-area").html(actionButtonBuilder(wizard().actions)); // insert dynamic buttons?
+  $("#button-area").html(actionButtonBuilder(wizard().actions)); 
   $("button").on("click", function() {
-    wizard().actions[$(this).prop("id")]();
+    const target = goblin; //get dynamically from checkbox or similar
+    wizard().actions[$(this).prop("id")](target);
+    $("#text-display-area").prepend(`<p>${target().name} HP is ${target().HP}`);
   });
 });
 

@@ -2,8 +2,8 @@ body{
   background-color: blue;
 }
 
-.text-display-area{
+#text-display-area{
   background-color: white;
   overflow-y: auto;
-  height: 10em;
+  height: 5em;
 }
