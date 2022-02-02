@@ -1,39 +1,36 @@
-//character stat att, def, health , exp, name
-//1 wizard 
-
-const state = (initialState) => {
+export const state = (initialState) => {
   let currentState = initialState;
   return (stateChangeFunction = state => state) => {
     const newState = stateChangeFunction(currentState);
     currentState = {...newState};
     return newState;
-  }
-}
+  };
+};
 
-const setPropToValue = (prop) => {
+export const setPropToValue = (prop) => {
   return (value) => {
     return (state) => ({
       ...state,
       [prop]: value
     });
-  }
-}
+  };
+};
 
-const modifyPropByValue = (prop) => {
+export const modifyPropByValue = (prop) => {
   return (value) => {
     return (state) => ({
       ...state,
       [prop]: (state[prop] || 0) + value
     });
-  }
-}
+  };
+};
 
-const addAction = (actionName, actionFunction) => {
+export const addAction = (actionName, actionFunction) => {
   return (state) => ({...state,
     "actions": {...state.actions,
       [actionName]: actionFunction
     }
-  })
+  });
 };
 
 
