@@ -26,6 +26,6 @@ export const roleSelection = {
 };
 
 //enemies
-export const goblin = states.state({"name": "goblin", "HP": 10, "ATT": 1, "DEF": 1, "actions": {}});
+export const goblin = states.state({"name": "goblin", "HP": 15, "ATT": 1, "DEF": 1, "actions": {}});
 goblin(actions.addGenericAttack);
 goblin(actions.addPowerStrike);

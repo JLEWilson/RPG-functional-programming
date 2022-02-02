@@ -6,6 +6,7 @@ import * as entities from './js/entities.js';
 
 let player = {};
 const enemy = entities.goblin;
+let gameOver = false;
 
 //this is document ready
 $(() => { 
@@ -21,12 +22,17 @@ $(() => {
 function doButtonStuffUponRoleSelect() {
   $("#button-area").html(actionButtonBuilder(player().actions)); 
   $(".action-button").on("click", function() {
+    if (gameOver) return;
     //player action
     const target = enemy; //need to update to get dynamically from checkbox or similar
     const playerActionMessage = player().actions[$(this).prop("id")](target);
     $("#text-display-area").prepend(playerActionMessage);
-    $("#text-display-area").prepend(`<p>${target().name} HP is ${target().HP}`);
-  
+    $("#text-display-area").prepend(`<p>${target().name} HP is ${target().HP}<p>`);
+    if(target().HP <= 0){
+      $("#text-display-area").prepend(`<p>${target().name} has been slain! You win.<p>`);
+      gameOver = true;
+      return;
+    }
     //enemy action
     // TODO: target for enemy action (since they may target self to heal etc.)
     // pick a random action from enemy's list
@@ -34,7 +40,12 @@ function doButtonStuffUponRoleSelect() {
     const chosenAction = enemyActions[Math.floor(Math.random() * enemyActions.length)]; 
     const enemyActionMessage = enemy().actions[chosenAction](player);
     $("#text-display-area").prepend(enemyActionMessage);
-    $("#text-display-area").prepend(`<p>${player().name} HP is ${player().HP}`);
+    $("#text-display-area").prepend(`<p>${player().name} HP is ${player().HP}</p>`);
+    if(player().HP <= 0){
+      $("#text-display-area").prepend(`<p>You dead.<p>`);
+      gameOver = true;
+      return;
+    }
   });
 }
 
