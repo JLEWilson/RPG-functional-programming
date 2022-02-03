@@ -1,9 +1,26 @@
-body{
-  background-color: blue;
+body {
+  background-color: midnightblue;
+  color: white;
 }
 
-.text-display-area{
-  background-color: white;
-  overflow-y: auto;
-  height: 10em;
+.container {
+  margin-top: 10vh;
+}
+
+#text-display-area {
+  display: none;
+  background-color: rgb(231, 226, 226);
+  color: black;
+  height: 15em;
+  border: 5px black solid;
+  border-radius: 5% 25%;
+  padding: 1em 5em 1em 5em;
+}
+
+#text-display-area p {
+  text-align: center;
+}
+
+#button-area {
+  display: none;
 }

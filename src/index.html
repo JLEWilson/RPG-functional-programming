@@ -2,15 +2,31 @@
 <html lang="en-US">
 <head>
   <title>RPG</title>
-  <script src="./index.js"></script>
 </head>
 <body>
-  <div class="flex-container">
+  <div class="container">
+    <div id="top-stats-area" class= "row">
+      <div class="col-6">
+      </div>
+      <div id="enemy-stats" class="col-6">
+      </div>
+    </div>
     <div id="text-display-area">
 
     </div>
+    <div id="bottom-stats-area" class= "row">
+      <div id="player-stats" class="col-6">
+      </div>
+      <div class="col-6">
+      </div>
+    </div>
     <div id="button-area">
 
+    </div>
+    <div id="role-selection">
+      <h2>Create your adventurer:</h2>
+      <label for="player-name">Adventurer Name</label>
+      <input type="text" maxlength="16" id="player-name" name="player-name">
     </div>
   </div>
 </body>
