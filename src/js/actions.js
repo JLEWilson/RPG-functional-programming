@@ -2,36 +2,41 @@ import * as states from './states.js';
 
 //generic
 export const addGenericAttack = states.addAction("Attack", (actor, enemy) => {
-  enemy(states.modifyPropByValue("HP")(-1 * actor().ATT));
-  return `<p>${enemy().name} is hit for ${actor().ATT} damage!</p>`;
+  const dmg = (1 * actor().ATT) - enemy().DEF;
+  enemy(states.modifyPropByValue("HP")(-dmg));
+  return `<p>${actor().name} attacks! ${enemy().name} is hit for ${dmg} damage!</p>`;
 });
 
 //wizard
 export const addMagicMissile = states.addAction("Magic Missile", (actor, enemy) => {
-  enemy(states.modifyPropByValue("HP")(-1 * actor().ATT));
-  return `<p>${enemy().name} is hit by a magic missile for ${actor().ATT} damage!</p>`;
+  const dmg = (1 * actor().ATT) - (enemy().DEF / 2);
+  enemy(states.modifyPropByValue("HP")(-dmg));
+  return `<p>${actor().name} casts magic missile! ${enemy().name} is hit for ${dmg} damage!</p>`;
 });
 
 export const addFireball = states.addAction("Fireball", (actor, enemy) => {
-  enemy(states.modifyPropByValue("HP")(-1.5 * actor().ATT));
-  return `<p>Boom, fireball! ${enemy().name} takes ${1.5 *actor().ATT} damage!</p>`;
+  const dmg = (1.5 * actor().ATT) - (enemy().DEF / 2);
+  enemy(states.modifyPropByValue("HP")(-dmg));
+  return `<p>Boom!! ${enemy().name} takes ${dmg} damage from ${actor().name}'s fireball!</p>`;
 });
 
 //barbarian
 export const addPowerStrike = states.addAction("Power Strike", (actor, enemy) => {
-  enemy(states.modifyPropByValue("HP")(-2 * actor().ATT));
-  return `<p>Wapow! ${enemy().name} takes ${2 * actor().ATT} damage!</p>`;
+  const dmg = (2 * actor().ATT) - enemy().DEF;
+  enemy(states.modifyPropByValue("HP")(-dmg));
+  return `<p>Wapow! ${actor().name} crushes ${enemy().name} for ${dmg} damage!</p>`;
 });
 
 //paladin
 export const addHeal = states.addAction("Heal", (actor, target) => {
-  actor(states.modifyPropByValue("HP")(1.5 * actor().ATT));
-  return `<p>Hooray! ${actor().name} heals ${1.5 * actor().ATT} HP!</p>`;
+  const dmg = (1.5 * actor().ATT);
+  actor(states.modifyPropByValue("HP")(dmg));
+  return `<p>Hooray! ${actor().name} heals ${target().name} for ${dmg} HP!</p>`;
 });
 
 //ranger
 export const addDualShot = states.addAction("Dual Shot", (actor, enemy) => {
-  enemy(states.modifyPropByValue("HP")(-2 * actor().ATT));
-  return `<p>The first attack hits! ${enemy().name} takes ${actor().ATT} damage!</p>
-    <p>The second attack hits ${enemy().name} takes ${actor().ATT} damage!`;
+  const dmg = actor().ATT - enemy().DEF;
+  enemy(states.modifyPropByValue("HP")(-2 * dmg));
+  return `<p>${actor().name} fires two shots! ${enemy().name} takes ${dmg} damage twice!</p>`;
 });

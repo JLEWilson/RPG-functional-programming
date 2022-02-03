@@ -10,7 +10,7 @@ const barbarian = states.state({"name": "player", "class": "Barbarian", "HP": 35
 barbarian(actions.addGenericAttack);
 barbarian(actions.addPowerStrike);
 
-const paladin = states.state({"name": "player", "class": "Paladin", "HP": 40, "ATT": 4, "DEF": 3, "actions": {}});
+const paladin = states.state({"name": "player", "class": "Paladin", "HP": 40, "ATT": 4, "DEF": 2, "actions": {}});
 paladin(actions.addGenericAttack);
 paladin(actions.addHeal);
 
@@ -34,14 +34,18 @@ const kobold = states.state({"name": "Barry", "class": "Kobold", "HP": 20, "ATT"
 kobold(actions.addGenericAttack);
 kobold(actions.addDualShot);
 
-const elemental = states.state({"name": "Sherry", "class": "Elemental", "HP": 20, "ATT": 4, "DEF": 2, "actions": {}});
+const elemental = states.state({"name": "Sherry", "class": "Elemental", "HP": 20, "ATT": 4, "DEF": 3, "actions": {}});
 elemental(actions.addGenericAttack);
 elemental(actions.addFireball);
+
+const giantrat = states.state({"name": "Pinky", "class": "Giant Rat", "HP": 10, "ATT": 5, "DEF": 0, "actions": {}});
+giantrat(actions.addGenericAttack);
 
 export const enemies = {
   "goblin": goblin,
   "kobold":  kobold,
-  "elemental": elemental
+  "elemental": elemental,
+  "giantrat" : giantrat
 };
 
 export const twoRandomEnemies = () => {

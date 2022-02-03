@@ -42,7 +42,7 @@ function doButtonStuffUponRoleSelect() {
       const target = allTargets[$(this).prop("id")];
       const playerActionMessage = playerAction(player, target);
       $("#text-display-area").html(playerActionMessage);
-      $("#text-display-area").append(`<p>${target().name} HP is ${target().HP}<p>`);
+      $("#text-display-area").append(`<p>${target().name}'s HP is ${target().HP}<p>`);
       $("#enemy1-stats").html(statAreaBuilder(enemies[0]()));
       $("#enemy2-stats").html(statAreaBuilder(enemies[1]()));
       $("#player-stats").html(statAreaBuilder(player()));
@@ -51,7 +51,9 @@ function doButtonStuffUponRoleSelect() {
         if (enemies.filter(e => e().HP > 0).length === 0) {
           gameOver = true;
           $(".target-button").hide();
-          $("#text-display-area").append(`<p>You have slain all of the monsters! You win!<p>`);
+          $("#text-display-area").append(`
+            <p>You have slain all of the monsters!<p>
+            <a href="https://www.youtube.com/watch?v=vy9dHMu4cPk">You win!</a>`);
           return;
         }
       }
@@ -64,11 +66,12 @@ function doButtonStuffUponRoleSelect() {
         const chosenAction = enemyActions[Math.floor(Math.random() * enemyActions.length)]; 
         const enemyActionMessage = enemy().actions[chosenAction](enemy, player);
         $("#text-display-area").append(enemyActionMessage);
-        $("#text-display-area").append(`<p>${player().name} HP is ${player().HP}</p>`);
+        $("#text-display-area").append(`<p>${player().name}'s HP is ${player().HP}</p>`);
         $("#enemy1-stats").html(statAreaBuilder(enemies[0]()));
         $("#enemy2-stats").html(statAreaBuilder(enemies[1]()));
         $("#player-stats").html(statAreaBuilder(player()));
         if(player().HP <= 0){
+          $(".target-button").hide();
           $("#text-display-area").append(`<p>You dead.<p>`);
           gameOver = true;
           return;
