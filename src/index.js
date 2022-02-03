@@ -34,11 +34,10 @@ function doButtonStuffUponRoleSelect() {
   $(".action-button").on("click", function() {
     if (gameOver) return;
     const allTargets = [...enemies.filter(e => e().HP > 0), player];
-    console.log(allTargets);
     $("#target-button-area").html(targetButtonBuilder(allTargets));
     //player action
     const playerAction = player().actions[$(this).prop("id")];
-    console.log(playerAction);
+    
     $(".target-button").on("click", function() {
       const target = allTargets[$(this).prop("id")];
       const playerActionMessage = playerAction(player, target);
@@ -46,16 +45,19 @@ function doButtonStuffUponRoleSelect() {
       $("#text-display-area").append(`<p>${target().name} HP is ${target().HP}<p>`);
       $("#enemy1-stats").html(statAreaBuilder(enemies[0]()));
       $("#enemy2-stats").html(statAreaBuilder(enemies[1]()));
+      $("#player-stats").html(statAreaBuilder(player()));
       if(target().HP <= 0){
         $("#text-display-area").append(`<p>${target().name} has been slain!<p>`);
         if (enemies.filter(e => e().HP > 0).length === 0) {
           gameOver = true;
+          $(".target-button").hide();
+          $("#text-display-area").append(`<p>You have slain all of the monsters! You win!<p>`);
           return;
         }
       }
       
       //enemy actions
-      for (const enemy in enemies.filter(e => e().HP > 0))
+      for (const enemy of enemies.filter(e => e().HP > 0))
       {
         // pick a random action from enemy's list
         const enemyActions = Object.keys(enemy().actions);
@@ -63,6 +65,8 @@ function doButtonStuffUponRoleSelect() {
         const enemyActionMessage = enemy().actions[chosenAction](enemy, player);
         $("#text-display-area").append(enemyActionMessage);
         $("#text-display-area").append(`<p>${player().name} HP is ${player().HP}</p>`);
+        $("#enemy1-stats").html(statAreaBuilder(enemies[0]()));
+        $("#enemy2-stats").html(statAreaBuilder(enemies[1]()));
         $("#player-stats").html(statAreaBuilder(player()));
         if(player().HP <= 0){
           $("#text-display-area").append(`<p>You dead.<p>`);
@@ -74,6 +78,8 @@ function doButtonStuffUponRoleSelect() {
       $(".action-button").show();
       $(".target-button").hide();
     });
+    $(".action-button").hide();
+    $(".target-button").show();
   });
 } 
 
@@ -96,7 +102,6 @@ function actionButtonBuilder(actions) {
 function targetButtonBuilder(entities) {
   let output = "";
   for (const entity of entities) {
-    console.log(entity());
     output += `
     <button class="target-button" id="${entities.indexOf(entity)}">
       ${entity().name}

@@ -46,7 +46,12 @@ export const enemies = {
 
 export const twoRandomEnemies = () => {
   const enemyOptions = Object.keys(enemies);
-  const enemy1 = enemies[enemyOptions[Math.floor(Math.random() * enemyOptions.length)]];
-  const enemy2 = enemies[enemyOptions[Math.floor(Math.random() * enemyOptions.length)]];
+  const random1 = Math.floor(Math.random() * enemyOptions.length);
+  let random2 = Math.floor(Math.random() * enemyOptions.length);
+  while (random1 === random2){
+    random2 = Math.floor(Math.random() * enemyOptions.length);
+  }
+  const enemy1 = enemies[enemyOptions[random1]];
+  const enemy2 = enemies[enemyOptions[random2]];
   return [enemy1, enemy2];
 };
