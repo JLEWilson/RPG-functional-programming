@@ -89,7 +89,6 @@ function populateCharacterSelect(roles){
 /*
   Things we need:
   Dynamically select target for abilities
-  make things die at zero HP  
   make actions use stats correctly (multiple of att instead of hard-coded)
     -this will require passing self-state to each action
   make def mean something
