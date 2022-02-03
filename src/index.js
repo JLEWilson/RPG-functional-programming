@@ -17,34 +17,40 @@ $(() => {
     player(states.setPropToValue("name")($("#player-name").val()));
     $("#role-selection").hide();
     $("#button-area").show();
+    $("#text-display-area").show();
     doButtonStuffUponRoleSelect();
   });
 });
 
 function doButtonStuffUponRoleSelect() {
   $("#button-area").html(actionButtonBuilder(player().actions)); 
+  $("#player-stats").html(statAreaBuilder(player()));
+  $("#enemy-stats").html(statAreaBuilder(enemy()));
   $(".action-button").on("click", function() {
     if (gameOver) return;
     //player action
     const target = enemy; //need to update to get dynamically from checkbox or similar
     const playerActionMessage = player().actions[$(this).prop("id")](target);
-    $("#text-display-area").prepend(playerActionMessage);
-    $("#text-display-area").prepend(`<p>${target().name} HP is ${target().HP}<p>`);
+    $("#text-display-area").html(playerActionMessage);
+    $("#text-display-area").append(`<p>${target().name} HP is ${target().HP}<p>`);
+    $("#enemy-stats").html(statAreaBuilder(enemy()));
     if(target().HP <= 0){
-      $("#text-display-area").prepend(`<p>${target().name} has been slain! You win.<p>`);
+      $("#text-display-area").append(`<p>${target().name} has been slain! You win.<p>`);
       gameOver = true;
       return;
     }
+    
     //enemy action
     // TODO: target for enemy action (since they may target self to heal etc.)
     // pick a random action from enemy's list
     const enemyActions = Object.keys(enemy().actions);
     const chosenAction = enemyActions[Math.floor(Math.random() * enemyActions.length)]; 
     const enemyActionMessage = enemy().actions[chosenAction](player);
-    $("#text-display-area").prepend(enemyActionMessage);
-    $("#text-display-area").prepend(`<p>${player().name} HP is ${player().HP}</p>`);
+    $("#text-display-area").append(enemyActionMessage);
+    $("#text-display-area").append(`<p>${player().name} HP is ${player().HP}</p>`);
+    $("#player-stats").html(statAreaBuilder(player()));
     if(player().HP <= 0){
-      $("#text-display-area").prepend(`<p>You dead.<p>`);
+      $("#text-display-area").append(`<p>You dead.<p>`);
       gameOver = true;
       return;
     }
@@ -64,6 +70,11 @@ function actionButtonBuilder(actions) {
   return output;
 }
 
+// stat area builder
+function statAreaBuilder(player) {
+  return `<h2>${player.name} the ${player.class}</h2> <hr> <h3><strong>HP: ${player.HP}</strong></h3> <h4>ATK: ${player.ATT}</h4> <h4>DEF: ${player.DEF}</h4>`;
+}
+
 function populateCharacterSelect(roles){
   let output = "";
   for (const role in roles) {
@@ -79,4 +90,7 @@ function populateCharacterSelect(roles){
   Things we need:
   Dynamically select target for abilities
   make things die at zero HP  
+  make actions use stats correctly (multiple of att instead of hard-coded)
+    -this will require passing self-state to each action
+  make def mean something
 */
