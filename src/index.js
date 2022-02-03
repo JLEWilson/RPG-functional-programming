@@ -28,9 +28,10 @@ function doButtonStuffUponRoleSelect() {
   $("#enemy-stats").html(statAreaBuilder(enemy()));
   $(".action-button").on("click", function() {
     if (gameOver) return;
+
     //player action
     const target = enemy; //need to update to get dynamically from checkbox or similar
-    const playerActionMessage = player().actions[$(this).prop("id")](target);
+    const playerActionMessage = player().actions[$(this).prop("id")](player, target);
     $("#text-display-area").html(playerActionMessage);
     $("#text-display-area").append(`<p>${target().name} HP is ${target().HP}<p>`);
     $("#enemy-stats").html(statAreaBuilder(enemy()));
@@ -45,7 +46,7 @@ function doButtonStuffUponRoleSelect() {
     // pick a random action from enemy's list
     const enemyActions = Object.keys(enemy().actions);
     const chosenAction = enemyActions[Math.floor(Math.random() * enemyActions.length)]; 
-    const enemyActionMessage = enemy().actions[chosenAction](player);
+    const enemyActionMessage = enemy().actions[chosenAction](enemy, player);
     $("#text-display-area").append(enemyActionMessage);
     $("#text-display-area").append(`<p>${player().name} HP is ${player().HP}</p>`);
     $("#player-stats").html(statAreaBuilder(player()));
