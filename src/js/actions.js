@@ -20,13 +20,13 @@ export const addFireball = states.addAction("Fireball", (actor, enemy) => {
 //barbarian
 export const addPowerStrike = states.addAction("Power Strike", (actor, enemy) => {
   enemy(states.modifyPropByValue("HP")(-2 * actor().ATT));
-  return `<p>Wapow! ${enemy().name} takes ${-2 * actor().ATT} damage!</p>`;
+  return `<p>Wapow! ${enemy().name} takes ${2 * actor().ATT} damage!</p>`;
 });
 
 //paladin
 export const addHeal = states.addAction("Heal", (actor, target) => {
-  target(states.modifyPropByValue("HP")(1.5 * actor().ATT));
-  return `<p>Hooray! ${target().name} heals ${1.5 * actor().ATT} HP!</p>`;
+  actor(states.modifyPropByValue("HP")(1.5 * actor().ATT));
+  return `<p>Hooray! ${actor().name} heals ${1.5 * actor().ATT} HP!</p>`;
 });
 
 //ranger
