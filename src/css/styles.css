@@ -4,14 +4,14 @@ body {
 }
 
 .container {
-  margin-top: 10vh;
+  margin-top: 5vh;
 }
 
 #text-display-area {
   display: none;
   background-color: rgb(231, 226, 226);
   color: black;
-  height: 15em;
+  height: 20em;
   border: 5px black solid;
   border-radius: 5% 25%;
   padding: 1em 5em 1em 5em;
